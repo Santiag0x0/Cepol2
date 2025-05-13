@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Juego Épico</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #3a0ca3, #7209b7, #560bad, #b5179e);
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-size: 400% 400%;
+      animation: fondoAnimado 20s ease infinite;
+    }
+
+    @keyframes fondoAnimado {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow:
+        0 0 5px #fff,
+        0 0 10px #0ff,
+        0 0 20px #0ff,
+        0 0 40px #0ff;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #d0f0ff;
+      text-shadow:
+        0 0 4px rgba(0, 255, 255, 0.3),
+        0 0 8px rgba(0, 255, 255, 0.2);
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-cargar {
+      position: relative;
+      overflow: hidden;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      background-color: #00c9a7;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s ease;
+    }
+
+    .btn-cargar:hover {
+      background-color: #00a98e;
+      transform: scale(1.05);
+    }
+
+    .barra {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      background-color: rgba(255, 255, 255, 0.3);
+      z-index: 0;
+      transition: width 2s linear;
+    }
+
+    .btn-cargar span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .message {
+      margin-top: 25px;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #f0f0f0;
+      text-shadow: 0 0 3px #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Viaje a las Ciencias Políticas</h1>
+    <p>Prepárate para obtener grandes premios si logras superarme.</p>
+
+    <button class="btn-cargar" onclick="empezarJuego()">
+      <div class="barra" id="barraCarga"></div>
+      <span>Comenzar</span>
+    </button>
+
+    <div class="message" id="mensaje"></div>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="bgm" src="song.mp3" loop></audio>
+
+  <script>
+    const bgm = document.getElementById('bgm');
+    // Recuperar posición guardada
+    window.addEventListener('load', () => {
+      const tiempo = localStorage.getItem('musicaTime');
+      if (tiempo) bgm.currentTime = parseFloat(tiempo);
+    });
+
+    function empezarJuego() {
+      // Iniciar audio tras gesto de usuario
+      bgm.play().catch(err => console.warn('Audio bloqueado:', err));
+
+      document.getElementById('mensaje').textContent = "¡Vamos allá! 🚀";
+      document.getElementById('barraCarga').style.width = '100%';
+      setTimeout(() => {
+        window.location.href = 'explicacion.html';
+      }, 2000);
+    }
+
+    // Guardar posición antes de salir
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('musicaTime', bgm.currentTime);
+    });
+  </script>
+</body>
+</html>
